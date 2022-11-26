@@ -1,5 +1,4 @@
-@charset "EUC-KR";
-@import url(http://fonts.googleapis.com/earlyaccess/namumgothic.css);
+@charset "utf-8";
 @import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 * {
@@ -21,14 +20,27 @@ h2 {
 h1 {
 	font-family: 'Hanna';
 }
-/* Å×ÀÌºí °ü·Ã µğÀÚÀÎ Ã³¸® */
-table th, table td {
-	border: 1px solid #dddddd;
+li { list-style: none; }
+nav {
+	display: flex;
+	border: 1px solid #000;
 }
-thead th {
+
+#bs-example-navbar-collapse-1 {
+	display: flex;
+}
+/* í…Œì´ë¸” ê´€ë ¨ ë””ìì¸ ì²˜ë¦¬ */
+table {
+	margin: 0 auto;
+	width: 500px;
+}
+thead {
 	background-color: #006DCC;
 	color: white;
 	text-align: center;
+}
+tbody tr td {
+	border: 1px solid #dddddd;
 }
 tr td:first-child,
 tr th:first-child {
@@ -39,4 +51,29 @@ tr td:last-child,
 tr th:last-child {
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
+}
+input[type="text"], input[type="password"], input[type="email"] {
+	width: 90%;
+	height: 30px;
+	border: 1px solid #dddddd;
+	border-radius: 3px;
+}
+
+/* ëª¨ë‹¬ íŒì—…ì°½ ê´€ë¦¬ ë””ìì¼ ì²˜ë¦¬*/
+.vertical-alignment-helper {
+	display: table;
+	height: 100%;
+	width: 100%;
+	pointer-events: none;
+}
+.vertical-align-center {
+	display: table-cell;
+	vertical-align: middle;
+	pointer-events: none;
+}
+.modal-content {
+	width: inherit;
+	height: inherit;
+	margin: 0 auto;
+	pointer-events: all;
 }

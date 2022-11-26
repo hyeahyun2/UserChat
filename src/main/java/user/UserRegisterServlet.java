@@ -28,22 +28,23 @@ public class UserRegisterServlet extends HttpServlet {
 		String userEmail = request.getParameter("userEmail");
 		String userProfile = request.getParameter("userProfile");
 		// 해당 변수중 하나라도 null이거나 공백인 경우
-		if(userID == null || userID.equals("") || userPassword1 == null || userPassword1.equals("")
-				|| userPassword2 == null || userPassword2.equals("") || userName == null || userName.equals("")
-				|| userAge == null || userAge.equals("") || userGender == null || userGender.equals("")
-				|| userEmail == null || userEmail.equals("")) {
-			request.getSession().setAttribute("messageType", "오류 메세지");
-			request.getSession().setAttribute("messageContent", "모든 내용을 입력하세요.");
-			response.sendRedirect("join.jsp"); // 해당 페이지로 강제 이동
-			return; // doPost 함수 종료
-		}
-		// 비밀번호와 비밀번호확인이 일치하지 않는 경우
-		if(!userPassword1.equals(userPassword2)) {
-			request.getSession().setAttribute("messageType", "오류 메세지");
-			request.getSession().setAttribute("messageContent", "비밀번호가 서로 다릅니다.");
-			response.sendRedirect("join.jsp"); // 해당 페이지로 강제 이동
-			return; // doPost 함수 종료
-		}
+//		if(userID == null || userID.equals("") || userPassword1 == null || userPassword1.equals("")
+//				|| userPassword2 == null || userPassword2.equals("") || userName == null || userName.equals("")
+//				|| userAge == null || userAge.equals("") || userGender == null || userGender.equals("")
+//				|| userEmail == null || userEmail.equals("")) {
+//			// messgaeType과 content에 해당 내용이 session값으로 설정됨
+//			request.getSession().setAttribute("messageType", "오류 메세지");
+//			request.getSession().setAttribute("messageContent", "모든 내용을 입력하세요.");
+//			response.sendRedirect("join.jsp"); // 사용자를 해당 페이지로 강제 이동
+//			return; // doPost 함수 종료
+//		}
+//		// 비밀번호와 비밀번호확인이 일치하지 않는 경우
+//		if(!userPassword1.equals(userPassword2)) {
+//			request.getSession().setAttribute("messageType", "오류 메세지");
+//			request.getSession().setAttribute("messageContent", "비밀번호가 서로 다릅니다.");
+//			response.sendRedirect("join.jsp"); // 사용자를 해당 페이지로 강제 이동
+//			return; // doPost 함수 종료
+//		}
 		// 오류가 없는 경우!(위의 if문 2개에 걸리지 않은 경우)
 		// 아이디 중복 검사
 		int result = new UserDAO().register(userID, userPassword1, userName, userAge, userGender, userEmail, userProfile);

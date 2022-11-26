@@ -107,7 +107,6 @@ public class UserDAO {
 			Connection conn = null;
 			// PreparedStatement : sql 인젝션?같은 해킹공격 방어, 안정적으로 sql문 사용하게 해줌
 			PreparedStatement pstmt = null;
-			ResultSet rs = null;
 			String SQL = "insert into user values(?, ?, ?, ?, ?, ?, ?)";
 			try { // 우리가 작업할 내용
 				// getConnection : 데이터베이스 커넥션풀에 접근하도록 만들어줌
@@ -121,20 +120,12 @@ public class UserDAO {
 				pstmt.setString(5, userGender);
 				pstmt.setString(6, userEmail);
 				pstmt.setString(7, userProfile);
-				rs = pstmt.executeQuery(); // sql문을 실행한 결과 담아주기
-				// 이미 해당 아이디가 존재하거나 userID가 공백일 경우
-				if(rs.next() || userID.equals("")) { 
-					return 0; // 이미 존재하는 회원
-				} else {
-					return 1; // 가입가능한 회원 아이디
-				}
-				
+				return pstmt.executeUpdate();
 			} catch(Exception e) {
 				// 오류가 발생한 경우 출력
 				e.printStackTrace();
 			} finally { // sql문장이 실행이 끝난 뒤 -> 모든 리소스 닫아주도록
 				try {
-					if(rs != null) rs.close();
 					if(pstmt != null) pstmt.close();
 					if(conn != null) conn.close(); // 데이터베이스 종료
 				} catch(Exception e) {
