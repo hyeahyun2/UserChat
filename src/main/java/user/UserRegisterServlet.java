@@ -49,6 +49,7 @@ public class UserRegisterServlet extends HttpServlet {
 		// 아이디 중복 검사
 		int result = new UserDAO().register(userID, userPassword1, userName, userAge, userGender, userEmail, userProfile);
 		if(result == 1) { // 중복된 아이디값이 없는 경우  -> 회원가입 success!!
+			request.getSession().setAttribute("userID", userID); // 회원가입 성공시 자동 로그인
 			request.getSession().setAttribute("messageType", "성공 메세지");
 			request.getSession().setAttribute("messageContent", "회원가입에 성공했습니다.");
 			response.sendRedirect("index.jsp"); // 해당 페이지로 강제 이동
