@@ -82,14 +82,14 @@ public class ChatDAO {
 	
 	// 대화 내역 중 최근 것 몇개만 뽑아서 가져오기
 	// 매개변수에 int number 추가
-	public ArrayList<ChatDTO> getChatListByRecent(String fromID, String toID, String chatID, int number){
+	public ArrayList<ChatDTO> getChatListByRecent(String fromID, String toID, int number){
 		// 하나하나의 메세지를 리스트에 담아서 보관하기 위해 리스트 객체 생성(선언)하기
-		ArrayList<ChatDTO> chatList = null;;
+		ArrayList<ChatDTO> chatList = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		// 아이디가 받는사람or주는사람에 해당하게 되면 select하기(시간순 정렬!)
-		// (select MAX(chatID) - ? from chat) : 현재 chat에서 가장 chatID가 큰 값에서 ? 만큼 빼준 것
+		// (select MAX(chatID) - ? from chat) : 현재 chat에서 가장 chatID가 큰 값에서 number 만큼 빼준 것
 		String SQL = "select * from chat where ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) AND chatID > (select MAX(chatID) - ? from chat) ORDER BY chatTime";
 		try {
 			conn = dataSource.getConnection(); // db 연결

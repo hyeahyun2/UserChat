@@ -26,7 +26,7 @@ public class ChatSubmitServlet extends HttpServlet {
 			// 클라이언트에게 "0"이라는 문자 하나 반환
 			response.getWriter().write("0");
 		} else {
-			// 디코딩하기
+			// 디코딩하기(한글로 작성했을 경우를 대비)
 			fromID = URLDecoder.decode(fromID, "UTF-8");
 			toID = URLDecoder.decode(toID, "UTF-8");
 			chatContent = URLDecoder.decode(chatContent, "UTF-8");

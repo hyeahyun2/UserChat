@@ -46,6 +46,9 @@
 <script src="js/bootstrap.js"></script>
 <%--
  --%>
+ <%
+ request.setCharacterEncoding("utf-8");
+ %>
  <script type="text/javascript">
  	// 메세지 전송 성공 여부 알려주는 팝업창 띄우는 함수
  	function autoClosingAlert(selector, delay) {
@@ -81,6 +84,64 @@
 		// chatContent 값 비워주기 (chatContent : 보낼 메세지 적는 칸)
 		$('#chatContent').val('');
  	}
+ 	var lastID = 0; // 가장 마지막 채팅의 chatID값
+ 	function chatListFunction(type){
+ 		var fromID = '<%= userID %>';
+ 		var toID = '<%= toID %>';
+ 		$.ajax({
+ 			type: "POST",
+ 			url: "./chatListServlet",
+ 			data: { // 한글로 작성했을 경우를 대비 -> encodeURI 사용
+ 				fromID: encodeURIComponent(fromID),
+ 				toID: encodeURIComponent(toID),
+ 				listType: type
+ 			},
+ 			success: function(data){ // 성공적으로 통신을 수행했다면 -> data에 json형식의 데이터 담김
+ 				if(data == "") return; // 공백일 경우 제외
+ 				var parsed = JSON.parse(data); // json형태로 파싱
+ 				var result = parsed.result; // result에 담아주기
+ 				for(var i=0; i<result.length; i++){
+ 					// 메세지 출력
+ 					addChat(result[i][0].value, result[i][2].value, result[i][3].value);
+ 				}
+ 			// ChatListServlet의 getID함수에서 last 키에 해당하는 값 (chatID값)
+ 				lastID = Number(parsed.last); 
+ 			}
+ 		});
+ 	}
+	// 매개변수 = 챗보낸사람, 챗내용, 챗시간
+	function addChat(chatName, chatContent, chatTime){
+		// 채팅 리스트에 가져온 데이터 정보 담기
+		$("#chatList").append('<div class="row">' +
+			'<div class="col-lg-12">' +
+			'<div class="media"' +
+			'<a class="bull-left" href="#">' +
+			'<img class="media-object img-circle" style="width: 30px; height: 30px;" src="images/icon.png" alt="">' +
+			'</a>' +
+			'<div class="media-body">' +
+			'<h4 class="media-heading">' +
+			chatName +
+			'<span class="small pull-right">' +
+			chatTime +
+			'</span>' +
+			'</h4>' +
+			'<p>' +
+			chatContent +
+			'</p>' +
+			'</div>' +
+			'</div>' +
+			'</div>' +
+			'</div>' +
+			'<hr>');
+		// 스크롤 가장 아래로 내려주기
+		$('#chatList').scrollTop($('#chatList')[0].scrollHeight);
+	}
+	// 3초 간격으로 새로운 채팅 내용 가져오기
+	function getInfiniteChat(){
+		setInterval(function(){
+			chatListFunction(lastID);
+		}, 3000);
+	}
  </script>
 </head>
 <body>
@@ -158,5 +219,12 @@
 	<div class="alert alert-warning" id="warningMessage" style="display: none;">
 		<strong>데이터베이스 오류가 발생했습니다.</strong>
 	</div>
+	<script type="text/javascript">
+		// 문서가 다 불러와 졌을 때!
+		$(document).ready(function(){
+			chatListFunction('ten');
+			getInfiniteChat();
+		})
+	</script>
 </body>
 </html>
