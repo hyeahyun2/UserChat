@@ -16,7 +16,7 @@ public class ChatListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 기본 세팅
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/htmlk charset=UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		// 
 		String fromID = request.getParameter("fromID");
 		String toID = request.getParameter("toID");
@@ -73,7 +73,7 @@ public class ChatListServlet extends HttpServlet {
 		for(int i=0; i<chatList.size(); i++) {
 			result.append("[{\"value\": \"" + chatList.get(i).getFromID() + "\"},");
 			result.append("{\"value\": \"" + chatList.get(i).getToID() + "\"},");
-			result.append("{\"value\": \"" + chatList.get(i).getChatContent() + "\"},");
+			result.append("{\"value\": \"" + chatList.get(i).getChatContent() + "\"},");//
 			result.append("{\"value\": \"" + chatList.get(i).getChatTime() + "\"}]");
 			// 마지막 요소가 아니라면 -> 다음 요소를 잇기 위해 콤마(,) 추가
 			if(i != chatList.size() -1) result.append(",");

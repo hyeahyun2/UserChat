@@ -23,7 +23,7 @@
 		<%
 		//response.sendRedirect("index.jsp");
 		return;
-	}
+	} 
 	if(toID == null) {
 		%>
 		<script>
